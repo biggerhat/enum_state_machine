@@ -20,10 +20,10 @@ trait HasStateMachine {
         static::updating(function (self $model) use ($field, $stateEnum) {
             if ($model->isDirty($field)) {
                 $newStatus = $model->{$field};
-                if (array_key_exists($newStatus, $stateEnum::getTransitionEvents())) {
+                if (array_key_exists($newStatus->value, $stateEnum::getTransitionEvents())) {
                     //Events will need a consistent set of parameters to ensure no issues
                     //This changes if you want multiple events or just one but:
-                    $stateEnum::getTransitionEvents()[$newStatus]::dispatch();
+                    $stateEnum::getTransitionEvents()[$newStatus->value]::dispatch();
                 }
             }
         });

@@ -3,6 +3,7 @@
 namespace Enums;
 
 use Contracts\EnumStateMachineContract;
+use Events\TreatmentComplete;
 
 enum TreatmentStatusEnum: string implements EnumStateMachineContract {
     case Arrived = "waiting";
@@ -22,7 +23,9 @@ enum TreatmentStatusEnum: string implements EnumStateMachineContract {
     }
 
     public static function getTransitionEvents(): array {
-        return [];
+        return [
+            self::Complete->value => TreatmentComplete::class,
+        ];
     }
 
     public static function getDefaultState(): EnumStateMachineContract {
